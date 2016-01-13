@@ -1,0 +1,102 @@
+<html>
+<head>
+
+    <script src="../dist/kad.browser.js"></script>
+
+
+    <script>
+
+        var kademlia = kad;
+
+        // Define your Transport as a constructor function
+        function WebRtcTransport(contact, options) {
+            var self = this;
+
+          // Call `kademlia.RPC` to setup bindings
+          kademlia.RPC.call(this, contact, options);
+        } 
+
+
+        // Inherit for `kademlia.RPC`
+        kademlia.inherits(WebRtcTransport, kademlia.RPC);
+
+        // Implement `_open` method to start server
+        WebRtcTransport.prototype._open = function(ready) {
+            debugger;
+        };
+
+        // Implement `_send` method to deliver a message
+        WebRtcTransport.prototype._send = function(data, contact) {
+           debugger; 
+
+        };
+
+        // Implement `_close` method to cleanup
+        WebRtcTransport.prototype._close = function() {
+            debugger;
+        }; 
+
+
+
+        /* CONTACT */
+
+        // Define you constructor function
+        function PublicKeyContact(options) {
+          // Make sure the `new` keyword is not required
+          if (!(this instanceof PublicKeyContact)) {
+            return new PublicKeyContact(options);
+          }
+
+          // Store relevant contact information
+          this.publickey = options.publickey;
+
+          // Call super class to setup bindings
+          kademlia.Contact.call(this, options);
+        }
+
+        // Inherit from `kademlia.Contact`
+        kademlia.inherits(PublicKeyContact, kademlia.Contact);
+
+        // Implement `_createNodeID` for super class to use
+        PublicKeyContact.prototype._createNodeID = function() {
+          return kademlia.utils.createID(this.publickey);
+        };
+        
+
+        var contact = new PublicKeyContact({publickey: "larryaubstore"});
+
+        var firstNode = new kademlia.Node({
+            transport: new WebRtcTransport(contact),
+            storage: new kademlia.localStorage('label')
+        });
+
+
+        var secondcontact = new PublicKeyContact({publickey: "second"});
+
+        var secondNode = new kademlia.Node({
+            transport: new WebRtcTransport(secondcontact),
+            storage: new kademlia.localStorage('label')
+        });
+
+
+        secondNode.connect(contact, function(err) {
+            debugger;
+        });
+
+        
+
+        
+
+    </script>
+
+
+</head>
+
+
+
+<body>
+
+</body>
+
+
+</html>

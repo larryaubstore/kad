@@ -19,3 +19,6 @@ module.exports.hooks = require('./lib/hooks');
 module.exports.storage = require('./lib/storage');
 module.exports.utils = require('./lib/utils');
 module.exports.constants = require('./lib/constants');
+
+module.exports.inherits = require('util').inherits;
+module.exports.localStorage = require('kad-localstorage');
